@@ -185,3 +185,8 @@ FakesAssemblies/
 #Visual Micro
 Visual\ Micro/
 Debug/
+
+#Extras for Ardiono Projects
+.sln
+.vcxproj
+.vcxproj.filters
