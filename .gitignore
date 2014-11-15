@@ -187,6 +187,6 @@ Visual\ Micro/
 Debug/
 
 #Extras for Ardiono Projects
-.sln
-.vcxproj
-.vcxproj.filters
+*.sln
+*.vcxproj
+*.vcxproj.filters
