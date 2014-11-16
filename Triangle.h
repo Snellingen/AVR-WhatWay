@@ -3,6 +3,14 @@
 #include <Adafruit_ST7735.h>	// Source: https://github.com/adafruit/Adafruit-ST7735-Library
 #include "Object.h"
 
+enum TriDirection
+{
+	LEFT,
+	RIGHT, 
+	UP, 
+	DOWN
+};
+
 class Triangle : Object
 {
 
@@ -11,6 +19,7 @@ public:
 	uint16_t Height;
 	uint16_t Color;
 	uint16_t ClearColor; 
+	TriDirection Direction; 
 
 public:
 	Triangle()
@@ -18,9 +27,10 @@ public:
 		X = Y = Width = Height = 0; 
 		Color = ST7735_MAGENTA;
 		ClearColor = ST7735_BLACK; 
+		Direction = LEFT; 
 	}
-	Triangle(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t color)
-		: Width(width), Height(height), Color(color), Object(x,y){}
+	Triangle(uint16_t x, uint16_t y, uint16_t width, uint16_t height, TriDirection dir, uint16_t color)
+		: Width(width), Height(height), Color(color), Direction(dir), Object(x,y){}
 	~Triangle() {};
 
 	void Move(uint16_t dirX, uint16_t dirY);

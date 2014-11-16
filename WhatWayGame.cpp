@@ -2,7 +2,8 @@
 
 WhatWayGame::WhatWayGame()
 {
-	testTri = Triangle(20, 40, 20, 20, ST7735_RED); 
+	testTri1 = Triangle(0, 10, 10, 10, LEFT, ST7735_RED); 
+
 }
 
 void WhatWayGame::Start()
@@ -16,7 +17,7 @@ void WhatWayGame::Update()
 
 void WhatWayGame::Render(Adafruit_ST7735 *tftDisplay)
 {
-	testTri.Render(tftDisplay); 
+	testTri1.Render(tftDisplay);
 }
 
 void WhatWayGame::Exit()

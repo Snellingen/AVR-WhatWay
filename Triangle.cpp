@@ -36,5 +36,22 @@ void Triangle::Render(Adafruit_ST7735 *tftDisplay)
 
 void Triangle::DrawTriangle(Adafruit_ST7735 *tftDisplay, uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color)
 {
-	tftDisplay->fillTriangle(x, y, x + w / 2, y + h, x + w, y, color); 
+	switch (Direction)
+	{
+	case LEFT:
+		tftDisplay->fillTriangle(x, y, x, y + h, x + w, y + h / 2 , color);
+		break; 
+	case RIGHT:
+		tftDisplay->fillTriangle(x, y + h / 2, x + w, y + h, x + w, y, color);
+		break; 
+	case UP:
+		tftDisplay->fillTriangle(x, y, x + w / 2, y + h, x + w, y, color);
+		break; 
+	case DOWN:
+		tftDisplay->fillTriangle(x, y + h, x + w / 2, y, x + w, y + h, color);
+		break; 
+	default:
+		break;
+	}
+	
 }

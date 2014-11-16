@@ -16,6 +16,7 @@ public:
 	void Exit(); 
 
 private: 
-	Triangle testTri; 
+	Triangle testTri1;
+
 };
 
