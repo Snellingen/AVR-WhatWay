@@ -18,37 +18,46 @@ void Triangle::Update()
 
 }
 
-void Triangle::Render(Adafruit_ST7735 *tftDisplay)
+void Triangle::Render(Adafruit_ST7735 *tftDisplay, boolean clear)
 {
 	/* In this method we only draw the rectangle if it has moved.
 	 * We also only clear where the last triangle was instead of the whole frame,
 	 * this is is because it is slow to write to the display, so we have to keep it to the minimum. 
 	 */
-
-	if (!HasMoved) return; 
+	
+	if (!HasMoved) return;
 	/* Clear old triangle */
-	DrawTriangle(tftDisplay, lastX, lastY, Width, Height, ClearColor);
+	if (clear) Clear(tftDisplay);
 	/* Draw new triangle */
-	DrawTriangle(tftDisplay, X, Y, Width, Height, Color);
+	DrawTriangle(tftDisplay);
 	/* Set back the HasMoved flag because it has now been drawn.*/
+	lastX = X; 
+	lastY = Y; 
+	PrevDirection = Direction; 
 	HasMoved = false; 
 }
 
-void Triangle::DrawTriangle(Adafruit_ST7735 *tftDisplay, uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color)
+void Triangle::Clear(Adafruit_ST7735 *tftDisplay)
+{
+	// I'm using rectangle to fill so that I don't have to calculate diagonal lines. 
+	tftDisplay->fillRect(lastX -1, lastY -1, Width + 4, Height + 4, ClearColor); 
+}
+
+void Triangle::DrawTriangle(Adafruit_ST7735 *tftDisplay)
 {
 	switch (Direction)
 	{
 	case TRI_LEFT:
-		tftDisplay->fillTriangle(x, y, x, y + h, x + w, y + h / 2 , color);
+		tftDisplay->fillTriangle(X, Y, X, Y + Height, X + Width, Y + Height / 2 , Color);
 		break; 
 	case TRI_RIGHT:
-		tftDisplay->fillTriangle(x, y + h / 2, x + w, y + h, x + w, y, color);
+		tftDisplay->fillTriangle(X, Y + Height / 2, X + Width, Y + Height, X + Width, Y, Color);
 		break; 
 	case TRI_UP:
-		tftDisplay->fillTriangle(x, y, x + w / 2, y + h, x + w, y, color);
+		tftDisplay->fillTriangle(X, Y, X + Width / 2, Y + Height, X + Width, Y, Color);
 		break; 
 	case TRI_DOWN:
-		tftDisplay->fillTriangle(x, y + h, x + w / 2, y, x + w, y + h, color);
+		tftDisplay->fillTriangle(X, Y + Height, X + Width / 2, Y, X + Width, Y + Height, Color);
 		break; 
 	default:
 		break;

@@ -11,7 +11,7 @@ enum TriDirection
 	TRI_DOWN
 };
 
-class Triangle : Object
+class Triangle : public Object
 {
 
 public: 
@@ -19,7 +19,16 @@ public:
 	uint16_t Height;
 	uint16_t Color;
 	uint16_t ClearColor; 
-	TriDirection Direction; 
+	void SetDirection(TriDirection dir) 
+	{ 
+		PrevDirection = Direction; 
+		Direction = dir;
+	}
+	TriDirection GetDirection() { return Direction; }
+
+private: 
+	TriDirection Direction;
+	TriDirection PrevDirection;
 
 public:
 	Triangle()
@@ -35,10 +44,10 @@ public:
 
 	void Move(uint16_t dirX, uint16_t dirY);
 	void Update(); 
-	void Render(Adafruit_ST7735 *tftDisplay);
-
+	void Render(Adafruit_ST7735 *tftDisplay, boolean clear);
+	void Clear(Adafruit_ST7735 *tftDisplay);
 private: 
-	void DrawTriangle(Adafruit_ST7735 *tftDisplay, uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
+	void DrawTriangle(Adafruit_ST7735 *tftDisplay);
 
 };
 
