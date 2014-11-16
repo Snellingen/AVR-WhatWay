@@ -1,4 +1,8 @@
 #pragma once
+#define DISPLAY_WIDTH 128
+#define DISPLAY_HEIGHT 160
+#define OFFSET 15
+#define TRISIZE 10 
 
 #include "Triangle.h"
 enum SpawnType
@@ -21,21 +25,31 @@ class Spawner
 {
 
 private:
+	Triangle rightSpawn; 
 	Triangle spawned[5];
 	uint8_t spawnedSize; 
 
+	void SpawnArrow(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
+	void SpawnCircle(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
+	void SpawnDiagonal(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
+	void SpawnLine(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
 
 public:
-	Spawner() : spawnedSize(0){};
+	Spawner() : spawnedSize(0)
+	{
+		// FILL ARRAY.
+		for (uint8_t i = 0; i < 5; i++)
+		{
+			spawned[i] = Triangle(); 
+		}
+		rightSpawn = Triangle(); 
+	};
 	~Spawner() {};
 
 	void Update(); 
-	void Render(); 
-	void Spawn(uint8_t amount, SpawnType spwnType, SpawnRotation spwnRotation); 
-	void SpawnArrow(SpawnRotation spwnRotation);
-	void SpawnCircle(SpawnRotation spwnRotation);
-	void SpawnDiagonal(SpawnRotation spwnRotation);
-	void SpawnLine(SpawnRotation spwnRotation);
+	void Render(Adafruit_ST7735 *tftDisplay);
+	void Spawn(uint8_t amount, SpawnType spwnType, TriDirection correctDirection);
+	
 	
 };
 
