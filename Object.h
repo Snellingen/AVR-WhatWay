@@ -4,6 +4,8 @@ class Object
 {
 
 protected:
+	uint16_t lastX;
+	uint16_t lastY;
 	uint16_t X;
 	uint16_t Y;
 
@@ -14,8 +16,6 @@ public:
 	void SetY(uint16_t y) { lastY = Y; Y = y; }
 	uint16_t GetY() { return Y; }
 	boolean HasMoved;
-	uint16_t lastX;
-	uint16_t lastY;
 
 public:
 	Object()
