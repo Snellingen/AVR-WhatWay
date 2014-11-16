@@ -1,6 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #include "Triangle.h"
+#include "Spawner.h"
 
 class WhatWayGame
 {
@@ -16,7 +17,7 @@ public:
 	void Exit(); 
 
 private: 
-	Triangle testTri1;
+	Spawner spawner; 
 
 };
 

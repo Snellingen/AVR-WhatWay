@@ -5,10 +5,10 @@
 
 enum TriDirection
 {
-	LEFT,
-	RIGHT, 
-	UP, 
-	DOWN
+	TRI_LEFT,
+	TRI_RIGHT,
+	TRI_UP,
+	TRI_DOWN
 };
 
 class Triangle : Object
@@ -27,7 +27,7 @@ public:
 		X = Y = Width = Height = 0; 
 		Color = ST7735_MAGENTA;
 		ClearColor = ST7735_BLACK; 
-		Direction = LEFT; 
+		Direction = TRI_LEFT;
 	}
 	Triangle(uint16_t x, uint16_t y, uint16_t width, uint16_t height, TriDirection dir, uint16_t color)
 		: Width(width), Height(height), Color(color), Direction(dir), Object(x,y){}
