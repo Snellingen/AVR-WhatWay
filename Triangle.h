@@ -1,58 +1,34 @@
-#define TRI_DIRECTION_LEFT	0
-#define TRI_DIRECTION_RIGHT	1
-#define TRI_DIRECTION_UP	2
-#define TRI_DIRECTION_DOWN	3
+#pragma once
+#include <Adafruit_GFX.h>		// Source: https://github.com/adafruit/Adafruit-GFX-Library
+#include <Adafruit_ST7735.h>	// Source: https://github.com/adafruit/Adafruit-ST7735-Library
+#include "Object.h"
 
-typedef struct
+class Triangle : Object
 {
-	uint16_t x;
-	uint16_t y;
+
+public: 
 	uint16_t Width;
 	uint16_t Height;
-	uint16_t oldX;
-	uint16_t oldY;
-	boolean moved;
-} Triangle;
+	uint16_t Color;
+	uint16_t ClearColor; 
 
-
-void MoveTriangle(Triangle* tri, uint16_t distanceX, uint16_t distanceY)
-{
-	tri->oldX = tri->x;
-	tri->oldY = tri->y;
-
-	tri->x += distanceX;
-	tri->y += distanceY;
-
-	tri->moved = true;
-}
-
-void DrawTriangle(Triangle* tri, uint16_t color, boolean clearOld, Adafruit_ST7735 *tftDisplay)
-{
-	// If clearOld, clear the old triangle. 
-	if (clearOld)
+public:
+	Triangle()
 	{
-		if(tri->moved)
-		{
-		tftDisplay->fillTriangle(
-		tri->oldX,
-		tri->oldY,
-		tri->oldX + tri->Width / 2,
-		tri->oldY + tri->Height,
-		tri->oldX + tri->Width,
-		tri->oldY,
-		ST7735_BLACK);
-		}
-
-		// Draw the new triangle. 
-		tftDisplay->fillTriangle(
-			tri->x,
-			tri->y,
-			tri->x + tri->Width / 2,
-			tri->y + tri->Height,
-			tri->x + tri->Width,
-			tri->y,
-			color);
+		X = Y = Width = Height = 0; 
+		Color = ST7735_MAGENTA;
+		ClearColor = ST7735_BLACK; 
 	}
+	Triangle(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t color)
+		: Width(width), Height(height), Color(color), Object(x,y){}
+	~Triangle() {};
 
-	tri->moved = false;
-}
+	void Move(uint16_t dirX, uint16_t dirY);
+	void Update(); 
+	void Render(Adafruit_ST7735 *tftDisplay);
+
+private: 
+	void DrawTriangle(Adafruit_ST7735 *tftDisplay, uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
+
+};
+
