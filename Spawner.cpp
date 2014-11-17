@@ -195,7 +195,7 @@ void Spawner::UpdateValue(Triangle *tri, uint16_t posX, uint16_t posY, TriDirect
 {
 	tri->SetX(posX);
 	tri->SetY(posY);
-	tri->Width = rightSpawn.Height = TRISIZE;
+	tri->Width = tri->Height = TRISIZE;
 	tri->SetDirection(dir);
 	tri->Color = ST7735_RED;
 	tri->HasMoved = true;
