@@ -103,6 +103,38 @@ void Spawner::SpawnArrow(TriDirection correctDirection, uint8_t size, uint16_t p
 }
 void Spawner::SpawnCircle(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {
+	SpawnRotation flockRotation = (SpawnRotation) random(4);
+	TriDirection defaultRotation = (TriDirection) random(4);
+	uint8_t randomNum = random(size);
+
+	for (uint8_t i = 0; i < size; i++)
+	{
+		float radius = (size * OFFSET) / PI; 
+		float radians = ((2 * PI) / size) * i; 
+		uint16_t x = posX + radius * sin(radians);
+		uint16_t y = posY + radius * cos(radians); 
+		
+		if (randomNum == i)
+		{
+			rightSpawn.SetX(x);
+			rightSpawn.SetY(y);
+			rightSpawn.Width = rightSpawn.Height = TRISIZE;
+			rightSpawn.SetDirection(correctDirection);
+			rightSpawn.Color = ST7735_RED;
+			rightSpawn.HasMoved = true;
+		}
+		else
+		{
+			spawned[spawnedSize].SetX(x);
+			spawned[spawnedSize].SetY(y);
+			spawned[spawnedSize].Width = spawned[spawnedSize].Height = TRISIZE;
+			spawned[spawnedSize].SetDirection(defaultRotation);
+			spawned[spawnedSize].Color = ST7735_RED;
+			spawned[spawnedSize].HasMoved = true;
+
+			spawnedSize++;
+		}
+	}
 
 }
 void Spawner::SpawnDiagonal(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
