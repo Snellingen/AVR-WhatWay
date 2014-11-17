@@ -4,7 +4,7 @@ void Spawner::Spawn(uint8_t amount, SpawnType spwnType, TriDirection correctDire
 {
 	uint16_t posX = (DISPLAY_WIDTH / 2);
 	uint16_t posY = (DISPLAY_HEIGHT / 2);  
-
+	spawnedSize = 0;
 	switch (spwnType)
 	{
 	case SPWN_ARROW:
@@ -52,28 +52,15 @@ void Spawner::SpawnArrow(TriDirection correctDirection, uint8_t size, uint16_t p
 	}
 
 	uint8_t randomNum = random(size); 
-	spawnedSize = 0; 
 	for (uint8_t i = 0; i < size; i++)
 	{
 		if (randomNum == i)
 		{
-			rightSpawn.SetX(posX);
-			rightSpawn.SetY(posY);
-			rightSpawn.Width = rightSpawn.Height = TRISIZE; 
-			rightSpawn.SetDirection(correctDirection); 
-			rightSpawn.Color = ST7735_RED; 
-			rightSpawn.HasMoved = true;
-
+			UpdateValue(&rightSpawn, posX, posY, correctDirection); 
 		}
 		else
 		{
-			spawned[spawnedSize].SetX(posX);
-			spawned[spawnedSize].SetY(posY);
-			spawned[spawnedSize].Width = spawned[spawnedSize].Height = TRISIZE;
-			spawned[spawnedSize].SetDirection(defaultRotation);
-			spawned[spawnedSize].Color = ST7735_RED;
-			spawned[spawnedSize].HasMoved = true; 
-
+			UpdateValue(&spawned[spawnedSize], posX, posY, defaultRotation); 
 			spawnedSize++; 
 		}
 			
@@ -103,7 +90,6 @@ void Spawner::SpawnArrow(TriDirection correctDirection, uint8_t size, uint16_t p
 }
 void Spawner::SpawnCircle(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {
-	SpawnRotation flockRotation = (SpawnRotation) random(4);
 	TriDirection defaultRotation = (TriDirection) random(4);
 	uint8_t randomNum = random(size);
 
@@ -116,22 +102,11 @@ void Spawner::SpawnCircle(TriDirection correctDirection, uint8_t size, uint16_t 
 		
 		if (randomNum == i)
 		{
-			rightSpawn.SetX(x);
-			rightSpawn.SetY(y);
-			rightSpawn.Width = rightSpawn.Height = TRISIZE;
-			rightSpawn.SetDirection(correctDirection);
-			rightSpawn.Color = ST7735_RED;
-			rightSpawn.HasMoved = true;
+			UpdateValue(&rightSpawn, x, y, correctDirection);
 		}
 		else
 		{
-			spawned[spawnedSize].SetX(x);
-			spawned[spawnedSize].SetY(y);
-			spawned[spawnedSize].Width = spawned[spawnedSize].Height = TRISIZE;
-			spawned[spawnedSize].SetDirection(defaultRotation);
-			spawned[spawnedSize].Color = ST7735_RED;
-			spawned[spawnedSize].HasMoved = true;
-
+			UpdateValue(&spawned[spawnedSize], x, y, defaultRotation); 
 			spawnedSize++;
 		}
 	}
@@ -139,11 +114,58 @@ void Spawner::SpawnCircle(TriDirection correctDirection, uint8_t size, uint16_t 
 }
 void Spawner::SpawnDiagonal(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {
+	SpawnRotation flockRotation = (SpawnRotation) random(4);
+	TriDirection defaultRotation = (TriDirection) random(4);
 
+	posX += flockRotation == SPWN_LEFT || flockRotation == SPWN_DOWN
+		? -(OFFSET * size / 2)
+		: OFFSET  * size / 2; 
+	posY += (OFFSET * size / 2); 
+
+	uint8_t randomNum = random(size);
+	for (uint8_t i = 0; i < size; i++)
+	{
+		if (randomNum == i)
+		{
+			UpdateValue(&rightSpawn, posX, posY, correctDirection); 
+		}
+		else
+		{
+			UpdateValue(&spawned[spawnedSize], posX, posY, defaultRotation); 
+			spawnedSize++;
+		}
+		posX += flockRotation == SPWN_LEFT || flockRotation == SPWN_DOWN
+			? OFFSET : -OFFSET; 
+		posY -= OFFSET; 
+	}
 }
 void Spawner::SpawnLine(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {
+	SpawnRotation flockRotation = (SpawnRotation) random(4);
+	TriDirection defaultRotation = (TriDirection) random(4);
 
+	if (flockRotation == SPWN_LEFT || flockRotation == SPWN_RIGHT)
+	{
+		posX -= (OFFSET * size / 2); 
+	}
+	else posY += (OFFSET * size / 2); 
+	uint8_t randomNum = random(size);
+	for (uint8_t i = 0; i < size; i++)
+	{
+		if (randomNum == i)
+		{
+			UpdateValue(&rightSpawn, posX, posY, correctDirection); 
+		}
+		else
+		{
+			UpdateValue(&spawned[spawnedSize], posX, posY, defaultRotation); 
+			spawnedSize++; 
+		}
+
+		if (flockRotation == SPWN_LEFT || flockRotation == SPWN_RIGHT)
+			posX += OFFSET;
+		else posY -= OFFSET;
+	}
 }
 
 void Spawner::Update()
@@ -167,5 +189,15 @@ void Spawner::Render(Adafruit_ST7735 *tftDisplay)
 		}
 	}
 
+}
+
+void Spawner::UpdateValue(Triangle *tri, uint16_t posX, uint16_t posY, TriDirection dir)
+{
+	tri->SetX(posX);
+	tri->SetY(posY);
+	tri->Width = rightSpawn.Height = TRISIZE;
+	tri->SetDirection(dir);
+	tri->Color = ST7735_RED;
+	tri->HasMoved = true;
 }
 

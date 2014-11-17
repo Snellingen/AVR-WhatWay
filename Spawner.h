@@ -34,6 +34,8 @@ private:
 	void SpawnDiagonal(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
 	void SpawnLine(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
 
+	void UpdateValue(Triangle *tri, uint16_t posX, uint16_t posY, TriDirection dir); 
+
 public:
 	Spawner() : spawnedSize(0)
 	{
