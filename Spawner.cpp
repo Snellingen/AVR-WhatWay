@@ -197,7 +197,7 @@ void Spawner::UpdateValue(Triangle *tri, uint16_t posX, uint16_t posY, TriDirect
 	tri->SetY(posY);
 	tri->Width = tri->Height = TRISIZE;
 	tri->SetDirection(dir);
-	tri->Color = ST7735_RED;
+	tri->Color = WW_COLOR_WHITE;
 	tri->HasMoved = true;
 }
 

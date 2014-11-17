@@ -2,6 +2,7 @@
 #include <Adafruit_GFX.h>		// Source: https://github.com/adafruit/Adafruit-GFX-Library
 #include <Adafruit_ST7735.h>	// Source: https://github.com/adafruit/Adafruit-ST7735-Library
 #include "Object.h"
+#include "GlobalValues.h"
 
 enum TriDirection
 {
@@ -34,8 +35,8 @@ public:
 	Triangle()
 	{
 		X = Y = Width = Height = 0; 
-		Color = ST7735_MAGENTA;
-		ClearColor = ST7735_BLACK; 
+		Color = WW_COLOR_WHITE;
+		ClearColor = WW_COLOR_DARKBLUE; 
 		Direction = TRI_LEFT;
 	}
 	Triangle(uint16_t x, uint16_t y, uint16_t width, uint16_t height, TriDirection dir, uint16_t color)

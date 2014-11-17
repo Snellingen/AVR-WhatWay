@@ -1,6 +1,4 @@
 #pragma once
-#define DISPLAY_WIDTH 128
-#define DISPLAY_HEIGHT 160
 #define OFFSET 15
 #define TRISIZE 10 
 

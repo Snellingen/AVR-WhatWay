@@ -3,6 +3,10 @@
 #include "Triangle.h"
 #include "Spawner.h"
 
+#define TFT_CS	10
+#define TFT_RST  8                      
+#define TFT_DC	 9
+
 class WhatWayGame
 {
 
@@ -12,11 +16,14 @@ public:
 
 public: 
 	void Start();
-	void Update(); 
-	void Render(Adafruit_ST7735 *tftDisplay);
+	void Update();
+	void Render();
 	void Exit(); 
+	void InitDisplay();
 
 private: 
-	Spawner spawner; 
+	Spawner spawner;
+	Adafruit_ST7735 *tft;
+ 
 };
 
