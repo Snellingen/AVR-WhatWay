@@ -6,12 +6,15 @@ WhatWayGame::WhatWayGame()
 }
 
 void WhatWayGame::Start()
-{
+{ 
 }
 
 void WhatWayGame::Update()
-{
-	spawner.Spawn(5, SPWN_ARROW, TRI_LEFT);
+{ 
+	int spawn = random(3); 
+	int dir = random(3); 
+	spawner.Spawn(5, (SpawnType)spawn, (TriDirection)dir);
+	spawn++; 
 	delay(200); 
 }
 
