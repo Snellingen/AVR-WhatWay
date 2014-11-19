@@ -23,6 +23,7 @@ public:
 
 private: 
 	Spawner spawner;
+	GUIHandler GUI;
 	Adafruit_ST7735 *tft;
  
 };

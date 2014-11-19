@@ -2,8 +2,10 @@
 
 WhatWayGame::WhatWayGame()
 {
-	spawner = Spawner();
 	tft = new Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
+	spawner = Spawner();
+	GUI = GUIHandler(tft); 
+	
 }
 
 void WhatWayGame::Start()
@@ -24,8 +26,7 @@ void WhatWayGame::Update()
 
 void WhatWayGame::Render()
 {
-	tft->fillRoundRect(0, -5, DISPLAY_WIDTH, 20, 7, WW_COLOR_WHITE); 
-	tft->fillRoundRect(0, DISPLAY_HEIGHT -15, DISPLAY_WIDTH, 20, 7, WW_COLOR_WHITE);
+	
 
 	spawner.Render(tft);  
 }
