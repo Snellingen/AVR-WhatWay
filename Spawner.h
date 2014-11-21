@@ -1,8 +1,9 @@
 #pragma once
 #define OFFSET 15
 #define TRISIZE 10 
-
+#include "GlobalValues.h"
 #include "Triangle.h"
+
 enum SpawnType
 {
 	SPWN_ARROW,
@@ -11,13 +12,6 @@ enum SpawnType
 	SPWN_CIRCLE
 };
 
-enum SpawnRotation
-{
-	SPWN_RIGHT,
-	SPWN_LEFT,
-	SPWN_UP,
-	SPWN_DOWN
-};
 
 class Spawner
 {
@@ -27,12 +21,12 @@ private:
 	Triangle spawned[5];
 	uint8_t spawnedSize; 
 
-	void SpawnArrow(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
-	void SpawnCircle(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
-	void SpawnDiagonal(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
-	void SpawnLine(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
+	void SpawnArrow(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
+	void SpawnCircle(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
+	void SpawnDiagonal(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
+	void SpawnLine(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
 
-	void UpdateValue(Triangle *tri, uint16_t posX, uint16_t posY, TriDirection dir); 
+	void UpdateValue(Triangle *tri, uint16_t posX, uint16_t posY, GlobalDirection dir); 
 
 public:
 	Spawner() : spawnedSize(0)
@@ -48,8 +42,8 @@ public:
 
 	void Update(); 
 	void Render(Adafruit_ST7735 *tftDisplay);
-	void Spawn(uint8_t amount, SpawnType spwnType, TriDirection correctDirection);
-	
+	void Spawn(uint8_t amount, SpawnType spwnType, GlobalDirection correctDirection);
+	void RandomSpawn(uint8_t amount); 
 	
 };
 

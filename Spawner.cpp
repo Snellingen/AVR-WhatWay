@@ -1,6 +1,6 @@
 #include "Spawner.h"
 
-void Spawner::Spawn(uint8_t amount, SpawnType spwnType, TriDirection correctDirection)
+void Spawner::Spawn(uint8_t amount, SpawnType spwnType, GlobalDirection correctDirection)
 {
 	uint16_t posX = (DISPLAY_WIDTH / 2);
 	uint16_t posY = (DISPLAY_HEIGHT / 2);  
@@ -23,27 +23,36 @@ void Spawner::Spawn(uint8_t amount, SpawnType spwnType, TriDirection correctDire
 		break;
 	}
 }
-void Spawner::SpawnArrow(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
+
+void Spawner::RandomSpawn(uint8_t amount)
 {
-	SpawnRotation flockRotation = (SpawnRotation) random(4);
-	TriDirection defaultRotation = (TriDirection) random(4);
+	uint8_t spawnType = random(3);
+	uint8_t dir = random(3);
+
+	Spawn(amount, (SpawnType) spawnType, (GlobalDirection) dir);
+}
+
+void Spawner::SpawnArrow(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
+{
+	GlobalDirection flockRotation = (GlobalDirection) random(4);
+	GlobalDirection defaultRotation = (GlobalDirection) random(4);
 
 
 	switch (flockRotation)
 	{
-	case SPWN_RIGHT:
+	case GLB_RIGHT:
 		posX -= OFFSET / 2 * size / 4;
 		posY += OFFSET * size / 2; 
 		break;
-	case SPWN_LEFT:
+	case GLB_LEFT:
 		posX += OFFSET / 2 * size / 4;
 		posY += OFFSET * size / 2;
 		break;
-	case SPWN_UP:
+	case GLB_UP:
 		posX += OFFSET * size / 2;
 		posY += OFFSET / 2 * size / 4;
 		break;
-	case SPWN_DOWN:
+	case GLB_DOWN:
 		posX += OFFSET * size / 2;
 		posY -= OFFSET / 2 * size / 4;
 		break;
@@ -67,19 +76,19 @@ void Spawner::SpawnArrow(TriDirection correctDirection, uint8_t size, uint16_t p
 
 		switch (flockRotation)
 		{
-			case SPWN_RIGHT:
+			case GLB_RIGHT:
 				posX += i < (size / 2) ? OFFSET : -OFFSET; 
 				posY -= OFFSET;
 				break;
-			case SPWN_LEFT:
+			case GLB_LEFT:
 				posX += i < (size / 2) ? -OFFSET : OFFSET; 
 				posY -= OFFSET; 
 				break;
-			case SPWN_DOWN:
+			case GLB_DOWN:
 				posY += i < (size / 2) ? -OFFSET : OFFSET;
 				posX -= OFFSET; 
 				break;
-			case SPWN_UP:
+			case GLB_UP:
 				posY += i < (size / 2) ? OFFSET : -OFFSET; 
 				posX -= OFFSET; 
 				break;
@@ -88,9 +97,9 @@ void Spawner::SpawnArrow(TriDirection correctDirection, uint8_t size, uint16_t p
 		}
 	}
 }
-void Spawner::SpawnCircle(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
+void Spawner::SpawnCircle(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {
-	TriDirection defaultRotation = (TriDirection) random(4);
+	GlobalDirection defaultRotation = (GlobalDirection) random(4);
 	uint8_t randomNum = random(size);
 
 	for (uint8_t i = 0; i < size; i++)
@@ -112,12 +121,12 @@ void Spawner::SpawnCircle(TriDirection correctDirection, uint8_t size, uint16_t 
 	}
 
 }
-void Spawner::SpawnDiagonal(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
+void Spawner::SpawnDiagonal(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {
-	SpawnRotation flockRotation = (SpawnRotation) random(4);
-	TriDirection defaultRotation = (TriDirection) random(4);
+	GlobalDirection flockRotation = (GlobalDirection) random(4);
+	GlobalDirection defaultRotation = (GlobalDirection) random(4);
 
-	posX += flockRotation == SPWN_LEFT || flockRotation == SPWN_DOWN
+	posX += flockRotation == GLB_LEFT || flockRotation == GLB_DOWN
 		? -(OFFSET * size / 2)
 		: OFFSET  * size / 2; 
 	posY += (OFFSET * size / 2); 
@@ -134,17 +143,17 @@ void Spawner::SpawnDiagonal(TriDirection correctDirection, uint8_t size, uint16_
 			UpdateValue(&spawned[spawnedSize], posX, posY, defaultRotation); 
 			spawnedSize++;
 		}
-		posX += flockRotation == SPWN_LEFT || flockRotation == SPWN_DOWN
+		posX += flockRotation == GLB_LEFT || flockRotation == GLB_DOWN
 			? OFFSET : -OFFSET; 
 		posY -= OFFSET; 
 	}
 }
-void Spawner::SpawnLine(TriDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
+void Spawner::SpawnLine(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {
-	SpawnRotation flockRotation = (SpawnRotation) random(4);
-	TriDirection defaultRotation = (TriDirection) random(4);
+	GlobalDirection flockRotation = (GlobalDirection) random(4);
+	GlobalDirection defaultRotation = (GlobalDirection) random(4);
 
-	if (flockRotation == SPWN_LEFT || flockRotation == SPWN_RIGHT)
+	if (flockRotation == GLB_LEFT || flockRotation == GLB_RIGHT)
 	{
 		posX -= (OFFSET * size / 2); 
 	}
@@ -162,7 +171,7 @@ void Spawner::SpawnLine(TriDirection correctDirection, uint8_t size, uint16_t po
 			spawnedSize++; 
 		}
 
-		if (flockRotation == SPWN_LEFT || flockRotation == SPWN_RIGHT)
+		if (flockRotation == GLB_LEFT || flockRotation == GLB_RIGHT)
 			posX += OFFSET;
 		else posY -= OFFSET;
 	}
@@ -191,7 +200,7 @@ void Spawner::Render(Adafruit_ST7735 *tftDisplay)
 
 }
 
-void Spawner::UpdateValue(Triangle *tri, uint16_t posX, uint16_t posY, TriDirection dir)
+void Spawner::UpdateValue(Triangle *tri, uint16_t posX, uint16_t posY, GlobalDirection dir)
 {
 	tri->SetX(posX);
 	tri->SetY(posY);

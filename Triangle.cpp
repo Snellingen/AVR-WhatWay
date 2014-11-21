@@ -47,16 +47,16 @@ void Triangle::DrawTriangle(Adafruit_ST7735 *tftDisplay)
 {
 	switch (Direction)
 	{
-	case TRI_LEFT:
+	case GLB_LEFT:
 		tftDisplay->fillTriangle(X, Y, X, Y + Height, X + Width, Y + Height / 2 , Color);
 		break; 
-	case TRI_RIGHT:
+	case GLB_RIGHT:
 		tftDisplay->fillTriangle(X, Y + Height / 2, X + Width, Y + Height, X + Width, Y, Color);
 		break; 
-	case TRI_UP:
+	case GLB_UP:
 		tftDisplay->fillTriangle(X, Y, X + Width / 2, Y + Height, X + Width, Y, Color);
 		break; 
-	case TRI_DOWN:
+	case GLB_DOWN:
 		tftDisplay->fillTriangle(X, Y + Height, X + Width / 2, Y, X + Width, Y + Height, Color);
 		break; 
 	default:
