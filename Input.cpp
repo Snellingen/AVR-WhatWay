@@ -40,16 +40,17 @@ GlobalDirection Input::GetDirection()
 	{
 		return GLB_LEFT;
 	}
-	else if (GetXAxis() < 60)
+	if (GetXAxis() < 60)
 	{
 		return GLB_RIGHT;
 	}
-	else if (GetYAxis() > 900)
+	if (GetYAxis() > 900)
 	{
 		return GLB_UP;
 	}
-	else if (GetYAxis() < 60)
+	if (GetYAxis() < 60)
 	{
 		return GLB_DOWN; 
 	}
+	else return GLB_NONE; 
 }
