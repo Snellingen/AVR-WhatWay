@@ -7,3 +7,12 @@
 #define DISPLAY_WIDTH 128
 #define DISPLAY_HEIGHT 160
 
+enum GlobalDirection
+{
+	GLB_LEFT,
+	GLB_RIGHT,
+	GLB_UP,
+	GLB_DOWN,
+	GLB_NONE
+};
+
