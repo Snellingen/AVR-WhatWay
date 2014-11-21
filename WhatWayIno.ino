@@ -8,21 +8,20 @@
 #define SD_CS	 4
 
 const int chipSelect = 4;
-
-WhatWayGame game; 
+WhatWayGame game;  
 
 void setup()
 {
 	Serial.begin(9600);
 	Wire.begin();
 	initSD();
-	
+
 	game = WhatWayGame(); 
 	game.Start();
 }
 
 void loop(void)
-{
+{ 
 	game.Update(); 
 	game.Render(); 
 }
