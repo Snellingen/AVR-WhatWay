@@ -18,8 +18,9 @@ class Spawner
 
 private:
 	Triangle rightSpawn; 
-	Triangle spawned[5];
+	Triangle spawned[7];
 	uint8_t spawnedSize; 
+	boolean spawnSet;
 
 	void SpawnArrow(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
 	void SpawnCircle(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
@@ -37,9 +38,11 @@ public:
 			spawned[i] = Triangle(); 
 		}
 		rightSpawn = Triangle(); 
+		spawnSet = false; 
 	};
 	~Spawner() {};
 
+	GlobalDirection currentRightDirection;
 	void Update(); 
 	void Render(Adafruit_ST7735 *tftDisplay);
 	void Spawn(uint8_t amount, SpawnType spwnType, GlobalDirection correctDirection);
