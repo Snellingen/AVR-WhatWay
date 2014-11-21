@@ -12,7 +12,6 @@ WhatWayGame game;
 
 void setup()
 {
-	Serial.begin(9600);
 	Wire.begin();
 	initSD();
 
@@ -28,11 +27,10 @@ void loop(void)
 
 void initSD()
 {
-	Serial.print("Initializing SD card...");
 	if (!SD.begin(SD_CS))
 	{
-		Serial.println("failed!");
+		// FAIL
 		return;
 	}
-	Serial.println("OK!");
+	// OK
 }
