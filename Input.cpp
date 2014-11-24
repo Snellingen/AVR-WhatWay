@@ -34,8 +34,8 @@ boolean Input::ButtonClick()
 	// I don't think there's any need to for debounce the button. 
 	Serial.print("Button Value: "); 
 	Serial.println(analogRead(INPUT_BTN_PIN));
-	return false; 
-	return digitalRead(INPUT_BTN_PIN) == HIGH;
+
+	return digitalRead(INPUT_BTN_PIN) == LOW;
 }
 
 GlobalDirection Input::GetDirection()
