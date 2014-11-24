@@ -8,8 +8,8 @@
 class Sound
 {
 protected:
-	int positiveMelody[3];
-	int negativeMelody[3];
+	uint8_t positiveMelody[3];
+	uint8_t negativeMelody[3];
 
 	boolean posSound;
 	boolean negSound; 

@@ -15,7 +15,8 @@ public:
 	~GUIHandler();
 
 	void Start(); 
-	void Update();
+	void UpdateScore(uint16_t score);
+	void UpdateHighScore(uint16_t score);
 	void DrawInGameGUI();
 
 };

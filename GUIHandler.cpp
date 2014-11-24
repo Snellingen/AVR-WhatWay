@@ -16,9 +16,20 @@ void GUIHandler::Start()
 
 }
 
-void GUIHandler::Update()
+void GUIHandler::UpdateScore(uint16_t score)
 {
+	tft->fillRect(50, 5, 50, 10, WW_COLOR_WHITE);
+	tft->setCursor(50, 5);
+	tft->setTextColor(WW_COLOR_DARKBLUE);
+	tft->print(score); 
+}
 
+void GUIHandler::UpdateHighScore(uint16_t score)
+{
+	tft->fillRect(60, DISPLAY_HEIGHT - 11, 50, 10, WW_COLOR_WHITE);
+	tft->setCursor(60, DISPLAY_HEIGHT - 11);
+	tft->setTextColor(WW_COLOR_DARKBLUE);
+	tft->print(score);
 }
 
 void GUIHandler::DrawInGameGUI()
@@ -29,5 +40,5 @@ void GUIHandler::DrawInGameGUI()
 	tft->setTextColor(WW_COLOR_DARKBLUE); 
 	tft->print("Score:");
 	tft->setCursor(10, DISPLAY_HEIGHT - 11);
-	tft->print("High Score:");
+	tft->print("HiScore:");
 }
