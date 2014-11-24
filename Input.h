@@ -2,8 +2,8 @@
 #include <Arduino.h>
 #include "GlobalValues.h"
 
-#define INPUT_X_PIN A4
-#define INPUT_Y_PIN A5
+#define INPUT_Y_PIN A4
+#define INPUT_X_PIN A5
 
 // REMEMBER TO PUT PULLDOWN 10K ON BUTTON CONNECTION
 #define INPUT_BTN_PIN A3
@@ -23,8 +23,11 @@ public:
 	boolean ButtonClick(); 
 
 	GlobalDirection GetDirection(); 
+	GlobalDirection GetDirectionOnce();
 	
 private:
 	uint16_t GetAxis(uint8_t pin);
+	GlobalDirection lastDir; 
+
 };
 

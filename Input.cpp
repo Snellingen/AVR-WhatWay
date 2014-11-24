@@ -6,6 +6,7 @@ Input::Input()
 	pinMode(INPUT, INPUT_X_PIN);
 	pinMode(INPUT, INPUT_Y_PIN);
 	pinMode(INPUT, INPUT_BTN_PIN);
+	lastDir = GLB_NONE; 
 }
 
 
@@ -31,26 +32,56 @@ uint16_t Input::GetAxis(uint8_t pin)
 boolean Input::ButtonClick()
 {
 	// I don't think there's any need to for debounce the button. 
-	return digitalRead(INPUT_BTN_PIN) == HIGH; 
+	Serial.print("Button Value: "); 
+	Serial.println(analogRead(INPUT_BTN_PIN));
+	return false; 
+	return digitalRead(INPUT_BTN_PIN) == HIGH;
 }
 
 GlobalDirection Input::GetDirection()
 {
-	if (GetXAxis() > 900)
-	{
-		return GLB_LEFT;
-	}
-	if (GetXAxis() < 60)
+	/*Serial.print("X: ");
+	Serial.print(GetXAxis());
+	Serial.print(" Y: ");
+	Serial.println(GetYAxis());
+
+*/
+
+	if (GetXAxis() > 1000)
 	{
 		return GLB_RIGHT;
 	}
-	if (GetYAxis() > 900)
+	if (GetXAxis() < 80)
 	{
-		return GLB_UP;
+		return GLB_LEFT;
 	}
-	if (GetYAxis() < 60)
+	if (GetYAxis() > 1000)
 	{
-		return GLB_DOWN; 
+		return GLB_DOWN;
 	}
-	else return GLB_NONE; 
+	if (GetYAxis() < 80)
+	{
+		return GLB_UP; 
+	}
+	// This is so that we don't get flickering between values. 
+	else if (
+		(GetXAxis() < 600 && GetXAxis() > 500) || 
+		(GetYAxis() < 600 && GetYAxis() > 500))
+		return GLB_NONE;
+	else return lastDir; 
+}
+
+GlobalDirection Input::GetDirectionOnce()
+{
+	GlobalDirection currentDir = GetDirection(); 
+	if (currentDir != lastDir)
+	{
+		lastDir = currentDir; 
+		return currentDir; 
+	}
+	else
+	{
+		lastDir = currentDir; 
+		return GLB_NONE;
+	}
 }
