@@ -17,16 +17,16 @@ void Spawner::Spawn(uint8_t amount, SpawnType spwnType, GlobalDirection correctD
 	switch (spwnType)
 	{
 	case SPWN_ARROW:
-		SpawnArrow(correctDirection, amount, posX, posY);
+		SpawnArrow(&correctDirection, amount, posX, posY);
 		break;
 	case SPWN_DIAGONAL:
-		SpawnDiagonal(correctDirection, amount, posX, posY);
+		SpawnDiagonal(&correctDirection, amount, posX, posY);
 		break;
 	case SPWN_LINE:
-		SpawnLine(correctDirection, amount, posX, posY);
+		SpawnLine(&correctDirection, amount, posX, posY);
 		break;
 	case SPWN_CIRCLE:
-		SpawnCircle(correctDirection, amount, posX, posY);
+		SpawnCircle(&correctDirection, amount, posX, posY);
 		break;
 	default:
 		break;
@@ -40,8 +40,7 @@ void Spawner::RandomSpawn(uint8_t amount)
 
 	Spawn(amount, (SpawnType) spawnType, (GlobalDirection) dir);
 }
-
-void Spawner::SpawnArrow(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
+void Spawner::SpawnArrow(GlobalDirection *correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {
 	GlobalDirection flockRotation = (GlobalDirection) random(4);
 	GlobalDirection defaultRotation = (GlobalDirection) random(4);
@@ -74,7 +73,7 @@ void Spawner::SpawnArrow(GlobalDirection correctDirection, uint8_t size, uint16_
 	{
 		if (randomNum == i)
 		{
-			UpdateValue(&rightSpawn, posX, posY, correctDirection);
+			UpdateValue(&rightSpawn, posX, posY, *correctDirection);
 		}
 		else
 		{
@@ -106,7 +105,7 @@ void Spawner::SpawnArrow(GlobalDirection correctDirection, uint8_t size, uint16_
 		}
 	}
 }
-void Spawner::SpawnCircle(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
+void Spawner::SpawnCircle(GlobalDirection *correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {
 	GlobalDirection defaultRotation = (GlobalDirection) random(4);
 	uint8_t randomNum = random(size);
@@ -120,7 +119,7 @@ void Spawner::SpawnCircle(GlobalDirection correctDirection, uint8_t size, uint16
 
 		if (randomNum == i)
 		{
-			UpdateValue(&rightSpawn, x, y, correctDirection);
+			UpdateValue(&rightSpawn, x, y, *correctDirection);
 		}
 		else
 		{
@@ -130,7 +129,7 @@ void Spawner::SpawnCircle(GlobalDirection correctDirection, uint8_t size, uint16
 	}
 
 }
-void Spawner::SpawnDiagonal(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
+void Spawner::SpawnDiagonal(GlobalDirection *correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {
 	GlobalDirection flockRotation = (GlobalDirection) random(4);
 	GlobalDirection defaultRotation = (GlobalDirection) random(4);
@@ -145,7 +144,7 @@ void Spawner::SpawnDiagonal(GlobalDirection correctDirection, uint8_t size, uint
 	{
 		if (randomNum == i)
 		{
-			UpdateValue(&rightSpawn, posX, posY, correctDirection);
+			UpdateValue(&rightSpawn, posX, posY, *correctDirection);
 		}
 		else
 		{
@@ -157,7 +156,7 @@ void Spawner::SpawnDiagonal(GlobalDirection correctDirection, uint8_t size, uint
 		posY -= OFFSET;
 	}
 }
-void Spawner::SpawnLine(GlobalDirection correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
+void Spawner::SpawnLine(GlobalDirection *correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {
 	GlobalDirection flockRotation = (GlobalDirection) random(4);
 	GlobalDirection defaultRotation = (GlobalDirection) random(4);
@@ -172,7 +171,7 @@ void Spawner::SpawnLine(GlobalDirection correctDirection, uint8_t size, uint16_t
 	{
 		if (randomNum == i)
 		{
-			UpdateValue(&rightSpawn, posX, posY, correctDirection);
+			UpdateValue(&rightSpawn, posX, posY, *correctDirection);
 		}
 		else
 		{
@@ -210,17 +209,22 @@ void Spawner::Render(Adafruit_ST7735 *tftDisplay)
 	}
 
 }
-
 void Spawner::UpdateValue(Triangle *tri, uint16_t posX, uint16_t posY, GlobalDirection dir)
 {
 	tri->SetX(posX);
 	tri->SetY(posY);
-	tri->Width = tri->Height = TRISIZE;
 	tri->SetDirection(dir);
-	tri->Color = WW_COLOR_WHITE;
 	tri->HasMoved = true;
 
 	spawnSet = true;
 
+}
+void Spawner::Clear(Adafruit_ST7735 *tftDisplay)
+{
+	rightSpawn.Clear(tftDisplay); 
+	for (uint8_t i = 0; i < spawnedSize; i++)
+	{
+		spawned[i].Clear(tftDisplay); 
+	}
 }
 
