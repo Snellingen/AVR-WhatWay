@@ -3,13 +3,13 @@
 
 Sound::Sound()
 {
-	positiveMelody[0] = NOTE_D5;
-	positiveMelody[1] = NOTE_FS5;
-	positiveMelody[2] = NOTE_AS5;
+	positiveMelody[0] = NOTE_DS3;
+	positiveMelody[1] = NOTE_G3;
+	positiveMelody[2] = NOTE_B3;
 
-	negativeMelody[0] = NOTE_AS5;
-	negativeMelody[1] = NOTE_FS5;
-	negativeMelody[2] = NOTE_D5;
+	negativeMelody[0] = NOTE_F2;
+	negativeMelody[1] = NOTE_CS2;
+	negativeMelody[2] = NOTE_A1;
 
 	negSound = posSound =  isPlaying = false;
 	index = 0; 
@@ -35,7 +35,7 @@ void Sound::PlayNegativeSound()
 
 void Sound::PlayMenuSound()
 {
-	tone(SPEAKER_PIN, NOTE_D4, 0.0005); 
+	tone(SPEAKER_PIN, NOTE_B3, 0.0005); 
 }
 
 void Sound::Update()
