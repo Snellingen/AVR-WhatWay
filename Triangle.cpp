@@ -40,7 +40,7 @@ void Triangle::Render(Adafruit_ST7735 *tftDisplay, boolean clear)
 void Triangle::Clear(Adafruit_ST7735 *tftDisplay)
 {
 	// I'm using rectangle to fill so that I don't have to calculate diagonal lines. 
-	tftDisplay->fillRect(lastX -1, lastY -1, Width + 4, Height + 4, ClearColor); 
+	tftDisplay->fillRect(lastX -1, lastY -1, *Width + 4, *Height + 4, *ClearColor); 
 }
 
 void Triangle::DrawTriangle(Adafruit_ST7735 *tftDisplay)
@@ -48,16 +48,16 @@ void Triangle::DrawTriangle(Adafruit_ST7735 *tftDisplay)
 	switch (Direction)
 	{
 	case GLB_LEFT:
-		tftDisplay->fillTriangle(X, Y, X, Y + Height, X + Width, Y + Height / 2 , Color);
+		tftDisplay->fillTriangle(X, Y, X, Y + (*Height), X + (*Width), Y + (*Height) / 2, *Color);
 		break; 
 	case GLB_RIGHT:
-		tftDisplay->fillTriangle(X, Y + Height / 2, X + Width, Y + Height, X + Width, Y, Color);
+		tftDisplay->fillTriangle(X, Y + (*Height) / 2, X + (*Width), Y + (*Height), X + (*Width), Y, *Color);
 		break; 
 	case GLB_DOWN:
-		tftDisplay->fillTriangle(X, Y, X + Width / 2, Y + Height, X + Width, Y, Color);
+		tftDisplay->fillTriangle(X, Y, X + (*Width) / 2, Y + (*Height), X + (*Width), Y, *Color);
 		break; 
 	case GLB_UP:
-		tftDisplay->fillTriangle(X, Y + Height, X + Width / 2, Y, X + Width, Y + Height, Color);
+		tftDisplay->fillTriangle(X, Y + (*Height), X + (*Width) / 2, Y, X + (*Width), Y + (*Height), *Color);
 		break; 
 	default:
 		break;
