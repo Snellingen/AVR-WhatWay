@@ -1,6 +1,7 @@
 #pragma once
 #define OFFSET 15
 #include "GlobalValues.h"
+#include <Arduino.h>
 #include "Triangle.h"
 
 enum SpawnType
@@ -37,6 +38,9 @@ public:
 		}
 		rightSpawn = Triangle(); 
 		spawnSet = false; 
+
+		// This is so that the game is not always the same. 
+		randomSeed(analogRead(A0));
 	};
 	~Spawner() {};
 
