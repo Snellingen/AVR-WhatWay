@@ -12,16 +12,16 @@ public:
 	uint8_t* Height;
 	uint16_t* Color;
 	uint16_t* ClearColor; 
-	void SetDirection(GlobalDirection dir) 
+	void SetDirection(uint8_t dir) 
 	{ 
 		PrevDirection = Direction; 
 		Direction = dir;
 	}
-	GlobalDirection GetDirection() { return Direction; }
+	uint8_t GetDirection() { return Direction; }
 
 private: 
-	GlobalDirection Direction;
-	GlobalDirection PrevDirection;
+	uint8_t Direction;
+	uint8_t PrevDirection;
 	void DrawTriangle(Adafruit_ST7735 *tftDisplay);
 
 public:
@@ -35,7 +35,7 @@ public:
 
 		Direction = GLB_LEFT;
 	}
-	Triangle(uint16_t x, uint16_t y, GlobalDirection dir)
+	Triangle(uint16_t x, uint16_t y, uint8_t dir)
 		: Direction(dir), Object(x,y){}
 	~Triangle() {};
 

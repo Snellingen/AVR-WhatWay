@@ -22,11 +22,11 @@ private:
 	uint8_t spawnedSize; 
 	boolean spawnSet;
 
-	void SpawnArrow(GlobalDirection* correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
-	void SpawnCircle(GlobalDirection* correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
-	void SpawnDiagonal(GlobalDirection* correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
-	void SpawnLine(GlobalDirection* correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
-	void UpdateValue(Triangle *tri, uint16_t posX, uint16_t posY, GlobalDirection dir); 
+	inline void SpawnArrow(uint8_t* correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
+	inline void SpawnCircle(uint8_t* correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
+	inline void SpawnDiagonal(uint8_t* correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
+	inline void SpawnLine(uint8_t* correctDirection, uint8_t size, uint16_t posX, uint16_t posY);
+	inline void UpdateValue(Triangle *tri, uint16_t posX, uint16_t posY, uint8_t dir); 
 
 public:
 	Spawner() : spawnedSize(0)
@@ -44,10 +44,9 @@ public:
 	};
 	~Spawner() {};
 
-	GlobalDirection currentRightDirection;
-	void Update(); 
+	uint8_t currentRightDirection;
 	void Render(Adafruit_ST7735 *tftDisplay);
-	void Spawn(uint8_t amount, SpawnType spwnType, GlobalDirection correctDirection);
+	void Spawn(uint8_t amount, SpawnType spwnType, uint8_t correctDirection);
 	void Clear(Adafruit_ST7735 *tftDisplay);
 	void RandomSpawn(uint8_t amount); 
 	

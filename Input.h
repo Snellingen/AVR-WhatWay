@@ -15,16 +15,16 @@ public:
 	Input();
 	~Input();
 
-	uint16_t GetXAxis(); 
-	uint16_t GetYAxis();
+	inline uint16_t GetXAxis(); 
+	inline uint16_t GetYAxis();
 	boolean ButtonClick(); 
 
-	GlobalDirection GetDirection(); 
-	GlobalDirection GetDirectionOnce();
+	inline uint8_t GetDirection(); 
+	uint8_t GetDirectionOnce();
 	
 private:
 	uint16_t GetAxis(uint8_t pin);
-	GlobalDirection lastDir; 
+	uint8_t lastDir; 
 
 };
 

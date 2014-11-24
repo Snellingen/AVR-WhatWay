@@ -31,21 +31,12 @@ uint16_t Input::GetAxis(uint8_t pin)
 
 boolean Input::ButtonClick()
 {
-	// I don't think there's any need to for debounce the button. 
-	Serial.print("Button Value: "); 
-	Serial.println(analogRead(INPUT_BTN_PIN));
-
 	return digitalRead(INPUT_BTN_PIN) == LOW;
 }
 
-GlobalDirection Input::GetDirection()
+inline uint8_t Input::GetDirection()
 {
-	/*Serial.print("X: ");
-	Serial.print(GetXAxis());
-	Serial.print(" Y: ");
-	Serial.println(GetYAxis());
 
-*/
 
 	if (GetXAxis() > 1000)
 	{
@@ -71,9 +62,9 @@ GlobalDirection Input::GetDirection()
 	else return lastDir; 
 }
 
-GlobalDirection Input::GetDirectionOnce()
+uint8_t Input::GetDirectionOnce()
 {
-	GlobalDirection currentDir = GetDirection(); 
+	uint8_t currentDir = GetDirection(); 
 	if (currentDir != lastDir)
 	{
 		lastDir = currentDir; 
