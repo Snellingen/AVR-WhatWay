@@ -4,6 +4,7 @@
 #include <Adafruit_GFX.h>			// Source: https://github.com/adafruit/Adafruit-GFX-Library
 #include <Adafruit_ST7735.h>	        // Source: https://github.com/adafruit/Adafruit-ST7735-Library
 #include "WhatWayGame.h"
+#include "GlobalValues.h"
 
 WhatWayGame game;  
 
@@ -13,19 +14,8 @@ void setup()
 	Wire.begin();
 	delay(100); 
 
-	////pinMode(10, OUTPUT);
-	//if (!SD.begin(SD_CS))
-	//{
-	//	/*hasSD = false;*/
-	//	Serial.println("Failed to initialize.");
-	//	game = WhatWayGame();
-	//	game.Start(false);
-	//	return; 
-	//}
-	//Serial.println("Success!");
-
 	game = WhatWayGame();
-	game.Start(true);
+	game.Start();
 }
 
 void loop(void)
