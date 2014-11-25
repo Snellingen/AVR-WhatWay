@@ -10,10 +10,8 @@ WhatWayGame game;
 
 void setup()
 {
-	Serial.begin(9600); 
 	Wire.begin();
 	delay(100); 
-
 	game = WhatWayGame();
 	game.Start();
 }

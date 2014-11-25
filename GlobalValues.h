@@ -36,10 +36,10 @@ static void initSD()
 	pinMode(10, OUTPUT);
 	if (!SD.begin(SD_CS))
 	{
-		Serial.println("FAIL");
+		/*Serial.println("FAIL");*/
 		return;
 	}
-	Serial.println("OK!");
+	/*Serial.println("OK!");*/
 }
 
 static uint8_t ReadSDScore()
@@ -55,7 +55,7 @@ static uint8_t ReadSDScore()
 	}
 	else
 	{
-		Serial.println("E");
+		/*Serial.println("E");*/
 	}
 	file.close();
 	return retScore;
@@ -72,6 +72,6 @@ static void SaveToSd(int score)
 	}
 	else
 	{
-		Serial.println("F");
+		/*Serial.println("F");*/
 	}
 }

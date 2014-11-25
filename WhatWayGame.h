@@ -27,20 +27,19 @@ public:
 
 
 protected: 
-	uint8_t CalculateScore(const uint16_t* timeDelay, const uint8_t* streak, const uint8_t* arrowCount);
 	Spawner spawner;
 	Input input; 
 	Sound sound; 
 	uint8_t currentDir;
 
 	uint8_t gameState;
-	uint8_t streak;
 	uint8_t totalScore;
 	uint8_t highScore;
 	uint8_t currentSpawnSize;
 	uint8_t correct;
 
-	unsigned long time;  
+	uint16_t timeDelay;
+	unsigned long time;
  
 };
 

@@ -11,10 +11,9 @@ protected:
 	uint8_t positiveMelody[3];
 	uint8_t negativeMelody[3];
 
-	boolean posSound;
-	boolean negSound; 
-	boolean isPlaying; 
+	uint8_t status; 
 	uint8_t index;
+
 	unsigned long time;
 
 public:
@@ -22,11 +21,7 @@ public:
 	~Sound();
 
 	void PlayPositiveSound();
-
 	void PlayNegativeSound(); 
-
-	void PlayMenuSound(); 
-	
 	void Update(); 
 
 };

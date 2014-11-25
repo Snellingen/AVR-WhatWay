@@ -10,7 +10,6 @@ WhatWayGame::WhatWayGame()
 	gameState = GAME_STATE_START;
 	totalScore = 0;
 	time = 0;
-	streak = 0;
 	highScore = 0;
 	
 }
@@ -33,7 +32,6 @@ void WhatWayGame::Update()
 	case GAME_STATE_START:
 		correct = 0;
 		currentSpawnSize = 1;
-		streak = 0;
 		totalScore = 0;
 		spawner.RandomSpawn(currentSpawnSize);
 		time = millis();
@@ -44,31 +42,29 @@ void WhatWayGame::Update()
 		currentDir = input.GetDirectionOnce();
 
 		if (currentDir == GLB_NONE) break;
-
-		if (currentDir == spawner.currentRightDirection)
+		timeDelay = millis() - time;
+		if (currentDir == spawner.currentRightDirection && timeDelay < 2000)
 		{
 			correct++;
-			sound.PlayPositiveSound();
-			uint16_t timeDelay = millis() - time;
-			if (timeDelay < 1000)
+			if (timeDelay < 700)
 			{
-				streak++;
-				if (streak >= 200) streak = 200;
+				if (totalScore < 254)
+					totalScore += 1;
 			}
-			else streak = 0;
-
-			totalScore += CalculateScore(&timeDelay, &streak, &currentSpawnSize);
 
 			UpdateScore(totalScore);
 
-			if (correct > 10)
+			if (correct > 5)
 			{
-				currentSpawnSize += 2;
+				if (currentSpawnSize < 5)
+					currentSpawnSize += 2;
 				correct = 0;
 			}
 
 			spawner.RandomSpawn(currentSpawnSize);
 			time = millis();
+
+			sound.PlayPositiveSound(); 
 		}
 		else
 		{
@@ -82,24 +78,16 @@ void WhatWayGame::Update()
 			}
 
 			UpdateScore(0);
-			sound.PlayNegativeSound();
 			spawner.Clear(&tft);
 			gameState = GAME_STATE_GAMEOVER;
-
-			/*
-				Even if this is not in the GAME_STATE_GAMEOVER
-				I still draw it on this state instead of the game over state.
-				This is because I only want it drawn once without using any extra variables.
-				*/
 			tft.setCursor(10, DISPLAY_HEIGHT / 2 - 10);
 			tft.setTextColor(WW_COLOR_WHITE);
 			tft.setTextSize(2);
 			tft.print("GAME OVER");
 			tft.setTextSize(1);
-			tft.setCursor(20, DISPLAY_HEIGHT / 2 + 10);
-			tft.print("Score: ");
-			tft.print(totalScore);
-			tft.setTextSize(1);
+
+			sound.PlayNegativeSound();
+
 		}
 		break;
 
@@ -108,21 +96,12 @@ void WhatWayGame::Update()
 		if (input.ButtonClick())
 		{
 			tft.fillRect(10, DISPLAY_HEIGHT / 2 - 10, DISPLAY_WIDTH - 20, 20, WW_COLOR_DARKBLUE);
-			tft.fillRect(20, DISPLAY_HEIGHT / 2 + 10, DISPLAY_WIDTH - 40, 10, WW_COLOR_DARKBLUE);
 			gameState = GAME_STATE_START;
 		}
 
 		break;
 	}
 	sound.Update();
-}
-
-inline uint8_t WhatWayGame::CalculateScore(const uint16_t *timeDelay, const uint8_t *streak, const uint8_t *arrowCount)
-{
-	// Capping timebonus to 10 so you don't get absurd amount of points when really fast.
-
-	int timeBonus = 10 - ((*timeDelay) / 100);
-	return  (timeBonus < 0 ? 0 : timeBonus * (*streak) * (*arrowCount)) / 4;
 }
 
 void WhatWayGame::Render()
@@ -132,10 +111,10 @@ void WhatWayGame::Render()
 
 inline void WhatWayGame::UpdateScore(uint8_t score)
 {
-	/*tft.fillRect(50, 5, 50, 10, WW_COLOR_WHITE);
+	tft.fillRect(50, 5, 50, 10, WW_COLOR_WHITE);
 	tft.setCursor(50, 5);
 	tft.setTextColor(WW_COLOR_DARKBLUE);
-	tft.print(score);*/
+	tft.print(score);
 }
 
 inline void WhatWayGame::UpdateHighScore(uint8_t score)
@@ -148,13 +127,13 @@ inline void WhatWayGame::UpdateHighScore(uint8_t score)
 
 inline void WhatWayGame::DrawGUI()
 {
-	/*tft.fillRoundRect(0, -3, DISPLAY_WIDTH, 20, 7, WW_COLOR_WHITE);
+	tft.fillRoundRect(0, -3, DISPLAY_WIDTH, 20, 7, WW_COLOR_WHITE);
 	tft.fillRoundRect(0, DISPLAY_HEIGHT - 15, DISPLAY_WIDTH, 20, 7, WW_COLOR_WHITE);
 	tft.setCursor(10, 5);
 	tft.setTextColor(WW_COLOR_DARKBLUE);
 	tft.print("Score:");
 	tft.setCursor(10, DISPLAY_HEIGHT - 11);
-	tft.print("HiScore:");*/
+	tft.print("HiScore:");
 }
 
 inline void WhatWayGame::InitDisplay()

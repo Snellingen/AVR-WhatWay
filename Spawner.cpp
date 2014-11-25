@@ -1,6 +1,6 @@
 #include "Spawner.h"
 
-inline void Spawner::Spawn(uint8_t amount, SpawnType spwnType, uint8_t correctDirection)
+inline void Spawner::Spawn(uint8_t amount, uint8_t spwnType, uint8_t correctDirection)
 {
 	uint16_t posX = (DISPLAY_WIDTH / 2);
 	uint16_t posY = (DISPLAY_HEIGHT / 2);
@@ -34,10 +34,7 @@ inline void Spawner::Spawn(uint8_t amount, SpawnType spwnType, uint8_t correctDi
 }
 void Spawner::RandomSpawn(uint8_t amount)
 {
-	uint8_t spawnType = random(4);
-	uint8_t dir = random(4);
-
-	Spawn(amount, (SpawnType) spawnType, (uint8_t) dir);
+	Spawn(amount, random(4), random(4));
 }
 inline void Spawner::SpawnArrow(uint8_t *correctDirection, uint8_t size, uint16_t posX, uint16_t posY)
 {

@@ -4,14 +4,10 @@
 #include <Arduino.h>
 #include "Triangle.h"
 
-enum SpawnType
-{
-	SPWN_ARROW,
-	SPWN_LINE,
-	SPWN_DIAGONAL,
-	SPWN_CIRCLE
-};
-
+#define SPWN_ARROW 0
+#define SPWN_LINE 1
+#define SPWN_DIAGONAL 2
+#define SPWN_CIRCLE 3
 
 class Spawner
 {
@@ -46,7 +42,7 @@ public:
 
 	uint8_t currentRightDirection;
 	void Render(Adafruit_ST7735 *tftDisplay);
-	void Spawn(uint8_t amount, SpawnType spwnType, uint8_t correctDirection);
+	void Spawn(uint8_t amount, uint8_t spwnType, uint8_t correctDirection);
 	void Clear(Adafruit_ST7735 *tftDisplay);
 	void RandomSpawn(uint8_t amount); 
 	

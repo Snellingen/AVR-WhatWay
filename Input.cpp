@@ -37,24 +37,23 @@ boolean Input::ButtonClick()
 inline uint8_t Input::GetDirection()
 {
 
-
-	if (GetXAxis() > 1000)
-	{
-		return GLB_RIGHT;
-	}
-	if (GetXAxis() < 80)
+	if (GetXAxis() > 900)
 	{
 		return GLB_LEFT;
 	}
-	if (GetYAxis() > 1000)
+	if (GetXAxis() < 80)
 	{
-		return GLB_DOWN;
+		return GLB_RIGHT;
+	}
+	if (GetYAxis() > 900)
+	{
+		return GLB_UP;
 	}
 	if (GetYAxis() < 80)
 	{
-		return GLB_UP; 
+		return GLB_DOWN; 
 	}
-	// This is so that we don't get flickering between values. 
+	// This to reduce flickering between values. 
 	else if (
 		(GetXAxis() < 600 && GetXAxis() > 500) || 
 		(GetYAxis() < 600 && GetYAxis() > 500))

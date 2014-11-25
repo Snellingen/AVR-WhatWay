@@ -11,7 +11,7 @@ Sound::Sound()
 	negativeMelody[1] = NOTE_CS2;
 	negativeMelody[2] = NOTE_A1;
 
-	negSound = posSound =  isPlaying = false;
+	status = 0; 
 	index = 0; 
 	time = millis();
 }
@@ -23,36 +23,32 @@ Sound::~Sound()
 
 void Sound::PlayPositiveSound()
 {
-	if (isPlaying)return;
-	isPlaying = posSound = true;
+	if (status == 1) return;
+	status = 1;
 }
 
 void Sound::PlayNegativeSound()
 {
-	if (isPlaying)return;
-	isPlaying = negSound = true;
-}
-
-void Sound::PlayMenuSound()
-{
-	tone(SPEAKER_PIN, NOTE_B3, 0.0005); 
+	if (status == 2)return;
+	status = 2; 
 }
 
 void Sound::Update()
 {
 
-	if (posSound || negSound)
+
+	if (status > 0)
 	{
 		if ( millis() - time < DLEAY_PER_TONE) return;
 		if (index >= 3)
 		{
 			index = 0; 
-			isPlaying = posSound = negSound = false;
+			status = 0; 
 			noTone(SPEAKER_PIN); 
 			return;
 		}
-		if (posSound) tone(SPEAKER_PIN, positiveMelody[index], 0.0004); 
-		else  tone(SPEAKER_PIN, negativeMelody[index], 0.0004);
+		if (status == 1) tone(SPEAKER_PIN, positiveMelody[index], 0.0004); 
+		else if (status == 2) tone(SPEAKER_PIN, negativeMelody[index], 0.0004);
 		index++; 
 		time = millis(); 
 	}
